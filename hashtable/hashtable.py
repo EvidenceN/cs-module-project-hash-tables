@@ -11,6 +11,7 @@ class HashTableEntry:
 # Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
 
+slots = [None] * MIN_CAPACITY
 
 class HashTable:
     """
@@ -21,7 +22,7 @@ class HashTable:
     """
 
     def __init__(self, capacity):
-        # Your code here
+        self.capacity = capacity
 
 
     def get_num_slots(self):
@@ -35,6 +36,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        return len(slots)
 
 
     def get_load_factor(self):
@@ -44,28 +46,53 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        load_factor = self.capacity/self.get_num_slots()
+        return load_factor
+
 
 
     def fnv1(self, key):
+        self.key = key
         """
         FNV-1 Hash, 64-bit
 
         Implement this, and/or DJB2.
-        """
+        resources https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function#FNV-1_hash
 
-        # Your code here
+        https://pypi.org/project/pyhash/
+
+        https://pypi.org/project/fnvhash/
+        """
+        offset_basis = 14695981039346656037
+        fnv_prime = 1099511628211
+
+        fnv = offset_basis
+
+        for c in key:
+            fnv = fnv * fnv_prime
+            fnv = fnv ^ c
+
+        return fnv
+
 
 
     def djb2(self, key):
+        self.key = key
         """
         DJB2 hash, 32-bit
 
         Implement this, and/or FNV-1.
+        # reference number http://www.goodmath.org/blog/2013/10/20/basic-data-structures-hash-tables/
         """
         # Your code here
+        prime_number = 5381
+        for c in key:
+        prime_number = (prime_number * 33) + ord(c)
+        return prime_number
 
 
     def hash_index(self, key):
+        self.key = key
         """
         Take an arbitrary key and return a valid integer index
         between within the storage capacity of the hash table.
@@ -74,6 +101,8 @@ class HashTable:
         return self.djb2(key) % self.capacity
 
     def put(self, key, value):
+        self.key = key
+        self.value = value
         """
         Store the value with the given key.
 
@@ -83,8 +112,13 @@ class HashTable:
         """
         # Your code here
 
+        slots[self.hash_index(key)] = value
+        return slots
+
+
 
     def delete(self, key):
+        self.key = key
         """
         Remove the value stored with the given key.
 
@@ -93,9 +127,12 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        slots[self.hash_index(key)] = None
+        return slots
 
 
     def get(self, key):
+        self.key = key
         """
         Retrieve the value stored with the given key.
 
@@ -104,6 +141,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
+
 
 
     def resize(self, new_capacity):
