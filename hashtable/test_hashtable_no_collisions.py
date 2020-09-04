@@ -11,7 +11,7 @@ from hashtable import HashTable
 class TestHashTable(unittest.TestCase):
 
     def test_hash_table_insertion_and_retrieval(self):
-        ht = HashTable(0x10000)
+        ht = HashTable(8)
 
         ht.put("key-0", "val-0")
         ht.put("key-1", "val-1")
@@ -25,7 +25,7 @@ class TestHashTable(unittest.TestCase):
         self.assertTrue(return_value == "val-2")
 
     def test_hash_table_pution_overwrites_correctly(self):
-        ht = HashTable(0x10000)
+        ht = HashTable(8)
 
         ht.put("key-0", "val-0")
         ht.put("key-1", "val-1")
@@ -43,7 +43,7 @@ class TestHashTable(unittest.TestCase):
         self.assertTrue(return_value == "new-val-2")
 
     def test_hash_table_removes_correctly(self):
-        ht = HashTable(0x10000)
+        ht = HashTable(8)
 
         ht.put("key-0", "val-0")
         ht.put("key-1", "val-1")

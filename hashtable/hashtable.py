@@ -12,7 +12,7 @@ class HashTableEntry:
 # Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
 
-slots = [None] * MIN_CAPACITY
+#slots = [None] * MIN_CAPACITY
 
 class HashTable:
     """
@@ -24,7 +24,7 @@ class HashTable:
 
     def __init__(self, capacity):
         self.capacity = capacity
-        self.slots = [None] * MIN_CAPACITY
+        self.slots = [None] * 10
 
 
     def get_num_slots(self):
