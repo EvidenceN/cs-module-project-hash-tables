@@ -1,3 +1,4 @@
+# reference = https://brilliant.org/wiki/hash-tables/
 class HashTableEntry:
     """
     Linked List hash table key/value pair
@@ -23,6 +24,7 @@ class HashTable:
 
     def __init__(self, capacity):
         self.capacity = capacity
+        self.slots = [None] * MIN_CAPACITY
 
 
     def get_num_slots(self):
@@ -36,7 +38,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        return len(slots)
+        return len(self.slots)
 
 
     def get_load_factor(self):
@@ -63,21 +65,23 @@ class HashTable:
 
         https://pypi.org/project/fnvhash/
         """
-        offset_basis = 14695981039346656037
-        fnv_prime = 1099511628211
-
-        fnv = offset_basis
-
-        for c in key:
-            fnv = fnv * fnv_prime
-            fnv = fnv ^ c
-
-        return fnv
-
+        #offset_basis = 14695981039346656037
+        #fnv_prime = 1099511628211
+#
+        #fnv = offset_basis
+#
+        #encoded = key.encode()
+#
+        #for c in encoded:
+        #    fnv = fnv * fnv_prime
+        #    fnv = fnv ^ c
+#
+        #return fnv
 
 
     def djb2(self, key):
         self.key = key
+        
         """
         DJB2 hash, 32-bit
 
@@ -85,9 +89,16 @@ class HashTable:
         # reference number http://www.goodmath.org/blog/2013/10/20/basic-data-structures-hash-tables/
         """
         # Your code here
+        #prime_number = 5381
+        #encoded = key.encode()
+        #for c in encoded:
+        #    prime_number = (prime_number * 33) + ord#(c)
+        #return prime_number
         prime_number = 5381
-        for c in key:
-        prime_number = (prime_number * 33) + ord(c)
+        encoded = key.encode('utf-8')
+        for c in encoded:
+            prime_number = ((prime_number * 33) ^ c) % 0x100000000
+
         return prime_number
 
 
@@ -112,8 +123,8 @@ class HashTable:
         """
         # Your code here
 
-        slots[self.hash_index(key)] = value
-        return slots
+        self.slots[self.hash_index(key)] = value
+        return self.slots
 
 
 
@@ -127,8 +138,8 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        slots[self.hash_index(key)] = None
-        return slots
+        self.slots[self.hash_index(key)] = None
+        return self.slots
 
 
     def get(self, key):
@@ -141,6 +152,8 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        value = self.slots[self.hash_index(key)]
+        return value
 
 
 
