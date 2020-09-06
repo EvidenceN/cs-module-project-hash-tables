@@ -56,3 +56,18 @@ the idea in hashing is to **scramble** some aspects of the key and to use this p
 * Hash-and-store: Use O(1) get/store/delete operations in dictionaries/sets to solve the problem faster, at the expense of additional space
 
 # Collision Resolution Via Linear Probing
+* Keys are stored in the table, instead of storing them in a linked list
+* Size of table is >= number of keys
+* If a collision occurs, walk the table until you find a free spot
+* Tombstone an element when it’s deleted
+
+# CHAINING VS. LINEAR PROBING
+
+* Linear Probing has the following benefits:
+*   * Low memory overhead - just need an array and a hash function
+*   * Excellent caching performance - by taking advantage of arrays and cache locality
+* Linear Probing has the following drawbacks:
+*   * Gets very slow as load factor approaches 1 (why do you think that is?)
+*   * You can never have more elements than the size of your array
+* For the guided project you should use chaining as the collision resolution method
+
