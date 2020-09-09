@@ -1,5 +1,13 @@
 def word_count(s):
-    # Your code here
+    split = s.lower().split()
+    dict_list = []
+    empty = {}
+    for i in split:
+        key = i
+        value = len(i)
+        dict_list.append((key, value))
+        #empty.update(dict_list)
+    return dict(dict_list)
 
 
 
