@@ -8,72 +8,6 @@ class HashTableEntry:
         self.value = value
         self.next = None
 
-class Node:
-    def __init__(self, value):
-        self.value = value
-        self.next = None
-
-    def __repr__(self):
-        return str(self.value)
-
-class LinkedList:
-    def __init__(self):
-        self.head = None
-
-    def __repr__(self):
-        currStr = ""
-        curr = self.head
-        while curr is not None:
-            currStr += f'{str(curr.value)} -> '
-            curr = curr.next
-        return currStr
-
-    # Runtime: O(1)
-    def insert_at_head(self, node):
-        node.next = self.head
-        self.head = node
-
-    # Runtime O(number of nodes)
-    def insert_at_head_or_overwrite(self, node):
-        existingNode = self.find(node.value)
-        if existingNode is not None:
-            existingNode.value = node.value
-        else:
-            self.insert_at_head(node)
-
-    # Runtime: O(number of nodes)
-    # Space: O(1)
-    def delete(self, value):
-        curr = self.head
-
-        if curr.value == value:
-            self.head = curr.next
-            return curr
-
-        prev = curr
-        curr = curr.next
-
-        while curr is not None:
-            if curr.value == value:
-                prev.next = curr.next
-                curr.next = None
-                return curr
-            else:
-                prev = curr
-                curr = curr.next
-
-        return None
-
-    # Runtime: O(number of nodes)
-    def find(self, value):
-        curr = self.head
-        while curr is not None:
-            if curr.value == value:
-                return curr
-            curr = curr.next
-        return None
-    
-
 # Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
 
@@ -91,7 +25,6 @@ class HashTable:
         self.capacity = capacity
         self.slots = [None] * 10
         self.head = None
-        self.ll = LinkedList()
 
 
     def get_num_slots(self):
@@ -126,8 +59,25 @@ class HashTable:
         FNV-1 Hash, 64-bit
 
         Implement this, and/or DJB2.
+        resources https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function#FNV-1_hash
+
+        https://pypi.org/project/pyhash/
+
+        https://pypi.org/project/fnvhash/
         """
-        pass
+        #offset_basis = 14695981039346656037
+        #fnv_prime = 1099511628211
+#
+        #fnv = offset_basis
+#
+        #encoded = key.encode()
+#
+        #for c in encoded:
+        #    fnv = fnv * fnv_prime
+        #    fnv = fnv ^ c
+#
+        #return fnv
+
 
     def djb2(self, key):
         self.key = key
@@ -136,10 +86,14 @@ class HashTable:
         DJB2 hash, 32-bit
 
         Implement this, and/or FNV-1.
-        
+        # reference number http://www.goodmath.org/blog/2013/10/20/basic-data-structures-hash-tables/
         """
         # Your code here
-        
+        #prime_number = 5381
+        #encoded = key.encode()
+        #for c in encoded:
+        #    prime_number = (prime_number * 33) + ord#(c)
+        #return prime_number
         prime_number = 5381
         encoded = key.encode('utf-8')
         for c in encoded:
@@ -160,12 +114,21 @@ class HashTable:
     def put(self, key, value):
         self.key = key
         self.value = value
+        """
+        Store the value with the given key.
 
-        i = self.hash_index(key)
+        Hash collisions should be handled with Linked List Chaining.
 
-        self.slots[i] = ll.insert_at_head_or_overwrite(key, value)
+        Implement this.
+        """
+        # Your code here
 
+        self.slots[self.hash_index(key)] = value
         return self.slots
+
+    def insert_at_head(self, node):
+        node.next = self.head
+        self.head = node
 
     def delete(self, key):
         self.key = key
@@ -177,12 +140,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        i = self.hash_index(key)
-
-        value = self.slots[i]
-
-        self.slots[i] = ll.delete(value)
-
+        self.slots[self.hash_index(key)] = None
         return self.slots
 
 
@@ -196,8 +154,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        i = self.hash_index(key)
-        value = self.slots[i]
+        value = self.slots[self.hash_index(key)]
         return value
 
 

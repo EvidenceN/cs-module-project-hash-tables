@@ -38,7 +38,7 @@ put("foo", "foo value")   # "foo" hashes to same index as "Hello"
 
 print(hash_table)
 
-lass Node:
+class Node:
     def __init__(self, value):
         self.value = value
         self.next = None

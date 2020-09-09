@@ -4,6 +4,9 @@ https://docs.google.com/presentation/d/1G6ZmD0H5Yi_7emrP3zduOpAfDMaIRTLMZWI99qJD
 ### Hash tables example code snippets
 https://hackmd.io/@sIQnCbQ0T56A3KLAiNrlhQ/Sy4woFh7v
 
+### Implementing DJB2 in Python
+https://hackmd.io/@sIQnCbQ0T56A3KLAiNrlhQ/r1GtXjBVP
+
 ## Hash functions
 
 * Takes an input string and returns an index/number
